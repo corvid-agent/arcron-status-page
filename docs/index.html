@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARCRON STATUS · algod · chain 81</title>
+  <meta name="description" content="Algod-only Arcron overdue split: unfunded vs reverting. Unsigned execute simulate. No indexer.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="crt" aria-hidden="true"></div>
+  <div class="bezel">
+    <header class="hdr">
+      <div class="hdr-row">
+        <h1>ARCRON STATUS</h1>
+        <span class="blink">█</span>
+      </div>
+      <p class="tag">ALGOD-ONLY · UNSIGNED EXECUTE 5b49cc5c · CHAIN 81 · NO INDEXER · NO WALLET</p>
+      <dl class="meta" id="meta">
+        <div><dt>last-round</dt><dd id="last-round">…</dd></div>
+        <div><dt>frozen</dt><dd id="frozen">…</dd></div>
+        <div><dt>keeper</dt><dd id="keeper">769891898</dd></div>
+        <div><dt>sender</dt><dd id="sender">creator stand-in</dd></div>
+        <div><dt>fee</dt><dd>3000 µALGO</dd></div>
+      </dl>
+      <p class="status" id="status">probing algod…</p>
+      <button type="button" id="probe" class="probe">PROBE</button>
+    </header>
+
+    <main>
+      <section class="split" aria-label="overdue split">
+        <article class="col unfunded" id="col-unfunded">
+          <h2>UNFUNDED <span class="n" id="n-unfunded">0</span></h2>
+          <p class="why">escrow cannot pay effective fee</p>
+          <ul id="list-unfunded"></ul>
+        </article>
+        <article class="col reverting" id="col-reverting">
+          <h2>REVERTING <span class="n" id="n-reverting">0</span></h2>
+          <p class="why">target inner call failed</p>
+          <ul id="list-reverting"></ul>
+        </article>
+        <article class="col waiting" id="col-waiting">
+          <h2>WAITING <span class="n" id="n-waiting">0</span></h2>
+          <p class="why">would succeed; keepers have not arrived</p>
+          <ul id="list-waiting"></ul>
+        </article>
+      </section>
+
+      <section class="other" id="sec-other" hidden>
+        <h2>OTHER <span class="n" id="n-other">0</span></h2>
+        <p class="why">overdue, funded, simulate failed for another reason (quoted, not guessed)</p>
+        <ul id="list-other"></ul>
+      </section>
+
+      <section class="on-sched">
+        <details>
+          <summary>on schedule <span id="n-ok">0</span></summary>
+          <p id="list-ok" class="ids"></p>
+        </details>
+      </section>
+    </main>
+
+    <footer>
+      <p>Not arrivals. Arrivals paints DELAYED from boxes without simulate, so a funded reverting target looks late. This board asks algod.</p>
+      <p>Apache-2.0 · unaudited · first-party demo · not the Arcron console · TestNet · chain 81</p>
+      <p>
+        <a href="https://github.com/corvid-agent/arcron-status-page">source</a>
+        ·
+        <a href="https://testnet.explorer.perawallet.app/application/769891898">keeper 769891898</a>
+      </p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
