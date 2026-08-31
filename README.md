@@ -8,13 +8,18 @@ Live: <https://corvid-agent.github.io/arcron-status-page/>
 
 ## Live proof
 
-At TestNet last-round **66819758**, unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
+At TestNet last-round **66851720** (probed 2026-08-31T15:14:20.028Z UTC), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
 
-- **GROUNDED-unfunded** 12 — ids 98–109 (escrow cannot pay the fee; simulate `assert failed pc=1181` / opcodes `dig 15; >=; assert`)
-- **DELAYED-reverting** 1 — id 87 target `770082145` (inner tx 0 failed: target `assert failed pc=249` / opcodes `==; !; assert`)
-- also overdue but not in that split: 89 would succeed (keepers have not arrived); 82 failed the 3000 µALGO fee pool (`needs 1mA more`) because pulse emits an extra inner axfer
+- **unfunded** 12 — ids 98–109 (escrow cannot pay effective fee; balance < fee; simulate quote `logic eval error: assert failed pc=1181`)
+- **reverting** 0
+- **waiting** 1 — id 84 target `770081902` (would succeed; keepers have not arrived)
+- **other** 0
+- **on schedule** 19 — ids 19–22, 82, 85–86, 89, 91–94, 110–116
+- **skipped** 1 — id 81 (Vigil; CoS does not top up or simulate)
 
-Public names only: keeper `769891898`, pulse `769891902`, rain hub `770130162`. Chain id `81` stays a number. Everything else is numeric.
+Snapshot also ships as [`docs/due.json`](docs/due.json) so Pages paints immediately, then the live algod probe overwrites. Keeper `769891898` is **not frozen** (`frozen=0`). Algod-only, unsigned simulate, no indexer, no wallet.
+
+Public names only: keeper `769891898`, pulse `769891902`, rain hub `770130162`. Rain hub `770130162` is pre-#213 (missing enter-while-locked `prize_locked==0` assert) and immutable; boards listen only. Chain id `81` stays a number. Everything else is numeric.
 
 ## How to run
 

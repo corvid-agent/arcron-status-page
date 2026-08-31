@@ -6,6 +6,7 @@
   const FEE = 3000;
   const HEAD = 130;
   const SELECTOR = new Uint8Array([0x5b, 0x49, 0xcc, 0x5c]);
+  const SKIP = 81n;
   const NAMES = {
     769891898: "keeper",
     769891902: "pulse",
@@ -121,7 +122,7 @@
     return `<li>
       <span class="id">#${u.id}</span>
       target ${escapeHtml(appName(u.targetApp))}
-      <span class="late">late ${late.toLocaleString()} r · escrow ${u.balance} / fee ${u.effFee}</span>
+      <span class="late">late ${Number(late).toLocaleString()} r · escrow ${u.balance} / fee ${u.effFee}</span>
       ${note}
     </li>`;
   }
@@ -132,6 +133,54 @@
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
+  }
+
+  function paintBuckets(buckets, ok) {
+    const paint = (kind, elList, elN) => {
+      elN.textContent = String(buckets[kind].length);
+      elList.innerHTML = buckets[kind].map(rowHtml).join("") || "<li class='note'>none</li>";
+    };
+    paint("UNFUNDED", $("list-unfunded"), $("n-unfunded"));
+    paint("REVERTING", $("list-reverting"), $("n-reverting"));
+    paint("WAITING", $("list-waiting"), $("n-waiting"));
+    $("n-other").textContent = String(buckets.OTHER.length);
+    $("list-other").innerHTML = buckets.OTHER.map(rowHtml).join("");
+    $("sec-other").hidden = buckets.OTHER.length === 0;
+    $("n-ok").textContent = String(ok.length);
+    $("list-ok").textContent = ok.map((id) => `#${id}`).join("  ") || "none";
+  }
+
+  function snapEntry(e) {
+    return {
+      id: e.id,
+      targetApp: e.targetApp,
+      roundsLate: e.roundsLate,
+      balance: e.balance,
+      effFee: e.effectiveFee,
+      note: e.failure || e.note || "",
+    };
+  }
+
+  async function paintSnapshot() {
+    try {
+      const res = await fetch("due.json", { cache: "no-store" });
+      if (!res.ok) return null;
+      const due = await res.json();
+      const buckets = {
+        UNFUNDED: (due.unfunded || []).map(snapEntry),
+        REVERTING: (due.reverting || []).map(snapEntry),
+        WAITING: (due.waiting || []).map(snapEntry),
+        OTHER: (due.other || []).map(snapEntry),
+      };
+      const ok = due.onSchedule || [];
+      $("last-round").textContent = String(due.lastRound);
+      $("frozen").textContent = String(due.frozen);
+      $("keeper").textContent = `keeper ${due.keeper || KEEPER}`;
+      paintBuckets(buckets, ok);
+      return due;
+    } catch (_) {
+      return null;
+    }
   }
 
   async function simulate(u, creator, params, round) {
@@ -178,7 +227,12 @@
   async function probe() {
     const btn = $("probe");
     btn.disabled = true;
-    $("status").textContent = "GET /v2/status …";
+    const snapRound = $("last-round").textContent;
+    const snapHint =
+      snapRound && snapRound !== "…"
+        ? `snapshot round ${snapRound} · probing live…`
+        : "GET /v2/status …";
+    $("status").textContent = snapHint;
     try {
       const status = await getJson("/v2/status");
       const round = BigInt(status["last-round"]);
@@ -206,6 +260,7 @@
         const name = b64dec(nameB64);
         if (name.length < 9 || name[0] !== 0x75) continue;
         const id = new DataView(name.buffer, name.byteOffset, name.byteLength).getBigUint64(1);
+        if (id === SKIP) continue;
         const box = await getJson(
           `/v2/applications/${KEEPER}/box?name=b64:${encodeURIComponent(nameB64)}`
         );
@@ -245,18 +300,7 @@
         buckets[u.kind].push(u);
       }
 
-      const paint = (kind, elList, elN) => {
-        elN.textContent = String(buckets[kind].length);
-        elList.innerHTML = buckets[kind].map(rowHtml).join("") || "<li class='note'>none</li>";
-      };
-      paint("UNFUNDED", $("list-unfunded"), $("n-unfunded"));
-      paint("REVERTING", $("list-reverting"), $("n-reverting"));
-      paint("WAITING", $("list-waiting"), $("n-waiting"));
-      $("n-other").textContent = String(buckets.OTHER.length);
-      $("list-other").innerHTML = buckets.OTHER.map(rowHtml).join("");
-      $("sec-other").hidden = buckets.OTHER.length === 0;
-      $("n-ok").textContent = String(ok.length);
-      $("list-ok").textContent = ok.map((id) => `#${id}`).join("  ") || "none";
+      paintBuckets(buckets, ok);
 
       $("status").textContent =
         `round ${round} · chain ${CHAIN} · frozen=${frozen} · overdue ${simmed} simulated · unsigned execute`;
@@ -268,5 +312,11 @@
   }
 
   $("probe").addEventListener("click", probe);
-  probe();
+  (async () => {
+    const due = await paintSnapshot();
+    if (due && due.lastRound != null) {
+      $("status").textContent = `snapshot round ${due.lastRound} · probing live…`;
+    }
+    await probe();
+  })();
 })();
