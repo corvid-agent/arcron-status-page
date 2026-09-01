@@ -8,13 +8,13 @@ Live: <https://corvid-agent.github.io/arcron-status-page/>
 
 ## Live proof
 
-At TestNet last-round **66888828** (probed 2026-09-01T18:59:34.716Z UTC), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
+At TestNet last-round **66895271** (probed 2026-09-01T23:48:35.154Z UTC / 2026-09-01 17:48 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
 
 - **unfunded** 12 — ids 98–109 (escrow cannot pay effective fee; balance < fee; simulate quote `logic eval error: assert failed pc=1181`)
 - **reverting** 0
-- **waiting** 3 — ids 85, 91–92 (would succeed)
+- **waiting** 1 — id 113 (would succeed)
 - **other** 0
-- **on schedule** 17 — ids 19–22, 82, 84, 86, 89, 93–94, 110–116
+- **on schedule** 18 — ids 19–22, 82, 84–86, 89, 92–94, 110–112, 114–116
 - **skipped** 1 — id 81 (Vigil; CoS does not top up or simulate)
 
 Snapshot also ships as [`docs/due.json`](docs/due.json) so Pages paints immediately, then the live algod probe overwrites. Keeper `769891898` is **not frozen** (`frozen=0`). Algod-only, unsigned simulate, no indexer, no wallet.
