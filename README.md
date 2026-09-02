@@ -8,16 +8,16 @@ Live: <https://corvid-agent.github.io/arcron-status-page/>
 
 ## Live proof
 
-At TestNet last-round **66895271** (probed 2026-09-01T23:48:35.154Z UTC / 2026-09-01 17:48 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
+At TestNet last-round **66915845** (probed 2026-09-02T15:13:18.564Z UTC / 2026-09-02 09:13 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
 
 - **unfunded** 12 — ids 98–109 (escrow cannot pay effective fee; balance < fee; simulate quote `logic eval error: assert failed pc=1181`)
 - **reverting** 0
-- **waiting** 1 — id 113 (would succeed)
+- **waiting** 1 — id 94 (would succeed)
 - **other** 0
-- **on schedule** 18 — ids 19–22, 82, 84–86, 89, 92–94, 110–112, 114–116
+- **on schedule** 22 — ids 19–22, 82, 84–86, 89, 92–93, 110–120
 - **skipped** 1 — id 81 (Vigil; CoS does not top up or simulate)
 
-Snapshot also ships as [`docs/due.json`](docs/due.json) so Pages paints immediately, then the live algod probe overwrites. Keeper `769891898` is **not frozen** (`frozen=0`). Algod-only, unsigned simulate, no indexer, no wallet.
+Snapshot also ships as [`docs/due.json`](docs/due.json) so Pages paints immediately, then the live algod probe overwrites. Refresh offline with `python3 scripts/refresh_due.py` (stdlib urllib; same overdue split as `docs/app.js`; skips 81, does not poke 87). Keeper `769891898` is **not frozen** (`frozen=0`). Algod-only, unsigned simulate, no indexer, no wallet.
 
 Public names only: keeper `769891898`, pulse `769891902`, rain hub `770130162`. Rain hub `770130162` is pre-#213 (missing enter-while-locked `prize_locked==0` assert) and immutable; boards listen only. Chain id `81` stays a number. Everything else is numeric.
 
@@ -33,6 +33,15 @@ Open the Pages site. It talks to `https://testnet-api.algonode.cloud` from the b
 Overdue here is `rounds_late > interval_rounds` (more than one whole cycle), matching `registry_health.py`. UNFUNDED is box math (`balance >= effective_fee`), not `pc=1181`.
 
 Local: serve `docs/` as static files. No build server, no env file, no mnemonic.
+
+To refresh the committed snapshot from this checkout:
+
+```bash
+python3 scripts/refresh_due.py
+```
+
+Writes `docs/due.json` only. TestNet reads + unsigned simulate; never submits.
+
 
 ## Measured cost
 
