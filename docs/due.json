@@ -4,9 +4,9 @@
   "keeper": 769891898,
   "pulse": 769891902,
   "rainHub": 770130162,
-  "lastRound": 66960880,
+  "lastRound": 66983308,
   "frozen": 0,
-  "probedAt": "2026-09-04T00:57:21.747Z",
+  "probedAt": "2026-09-04T17:45:58.392Z",
   "feeMicroAlgos": 3000,
   "selector": "5b49cc5c",
   "skipped": [
@@ -19,7 +19,7 @@
     {
       "id": 98,
       "targetApp": 770365966,
-      "roundsLate": 160736,
+      "roundsLate": 183164,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -29,7 +29,7 @@
     {
       "id": 99,
       "targetApp": 770365994,
-      "roundsLate": 160737,
+      "roundsLate": 183165,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -39,7 +39,7 @@
     {
       "id": 100,
       "targetApp": 770366010,
-      "roundsLate": 160728,
+      "roundsLate": 183156,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -49,7 +49,7 @@
     {
       "id": 101,
       "targetApp": 770366030,
-      "roundsLate": 160739,
+      "roundsLate": 183167,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -59,7 +59,7 @@
     {
       "id": 102,
       "targetApp": 770366067,
-      "roundsLate": 160725,
+      "roundsLate": 183153,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -69,7 +69,7 @@
     {
       "id": 103,
       "targetApp": 770366094,
-      "roundsLate": 160718,
+      "roundsLate": 183146,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -79,7 +79,7 @@
     {
       "id": 104,
       "targetApp": 770366116,
-      "roundsLate": 160708,
+      "roundsLate": 183136,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -89,7 +89,7 @@
     {
       "id": 105,
       "targetApp": 770366146,
-      "roundsLate": 160699,
+      "roundsLate": 183127,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -99,7 +99,7 @@
     {
       "id": 106,
       "targetApp": 770366187,
-      "roundsLate": 160687,
+      "roundsLate": 183115,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -109,7 +109,7 @@
     {
       "id": 107,
       "targetApp": 770366223,
-      "roundsLate": 160375,
+      "roundsLate": 182803,
       "balance": 2000,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -119,7 +119,7 @@
     {
       "id": 108,
       "targetApp": 770366335,
-      "roundsLate": 160666,
+      "roundsLate": 183094,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -129,7 +129,7 @@
     {
       "id": 109,
       "targetApp": 770366067,
-      "roundsLate": 160562,
+      "roundsLate": 182990,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -138,12 +138,34 @@
     }
   ],
   "reverting": [],
-  "waiting": [],
+  "waiting": [
+    {
+      "id": 113,
+      "targetApp": 770746178,
+      "roundsLate": 1823,
+      "balance": 2820000,
+      "effectiveFee": 4000,
+      "intervalRounds": 1286,
+      "nextExecutionRound": 66981485,
+      "note": "would succeed"
+    }
+  ],
   "other": [
+    {
+      "id": 116,
+      "targetApp": 770769163,
+      "roundsLate": 39628,
+      "balance": 496000,
+      "effectiveFee": 4000,
+      "intervalRounds": 30857,
+      "nextExecutionRound": 66943680,
+      "note": "logic eval error: group fee 0.0A too small (needs 1mA more) []transactions.SignedTxnWithAD{transactions.SignedTxnWithAD{",
+      "failure": "logic eval error: group fee 0.0A too small (needs 1mA more) []transactions.SignedTxnWithAD{transactions.SignedTxnWithAD{"
+    },
     {
       "id": 118,
       "targetApp": 770881395,
-      "roundsLate": 46513,
+      "roundsLate": 68941,
       "balance": 504000,
       "effectiveFee": 4000,
       "intervalRounds": 1700,
@@ -168,10 +190,8 @@
     110,
     111,
     112,
-    113,
     114,
     115,
-    116,
     117,
     119,
     120
