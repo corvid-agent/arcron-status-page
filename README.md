@@ -8,7 +8,7 @@ Live: <https://corvid-agent.github.io/arcron-status-page/>
 
 ## Live proof
 
-At TestNet last-round **66952259** (probed 2026-09-03T18:29:25.408Z UTC / 2026-09-03 12:29 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
+At TestNet last-round **66960880** (probed 2026-09-04T00:57:21.747Z UTC / 2026-09-03 18:57 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
 
 - **unfunded** 12 — ids 98–109 (escrow cannot pay effective fee; balance < fee; simulate quote `logic eval error: assert failed pc=1181`)
 - **reverting** 0
