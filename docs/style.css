@@ -146,3 +146,33 @@ a:hover { color: var(--amber); }
   .blink { animation: none; }
   .crt { display: none; }
 }
+
+.graphs {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.9fr) 1.2fr 1.2fr;
+  gap: 0.8rem;
+  margin-top: 1.1rem;
+}
+.panel {
+  border: 1px solid var(--mute);
+  padding: 0.55rem 0.65rem 0.35rem;
+  min-height: 14rem;
+  background: rgba(4, 18, 8, 0.55);
+  box-shadow: inset 0 0 24px rgba(124, 255, 107, 0.04);
+}
+.panel h2 {
+  margin: 0 0 0.25rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  color: var(--phos-dim);
+}
+canvas.fill {
+  width: 100%;
+  height: 12.5rem;
+  display: block;
+}
+@media (max-width: 980px) {
+  .graphs { grid-template-columns: 1fr; }
+  canvas.fill { height: 11rem; }
+}
+

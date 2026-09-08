@@ -158,3 +158,29 @@ def test_no_localnet_story_forced_onto_pages() -> None:
     assert not (ROOT / "docs" / "localnet.json").exists()
     assert not (ROOT / "docs" / "deploy.json").exists()
     assert "localnet" not in APP_JS.lower()
+
+
+def test_history_sqlite_graphs_assets() -> None:
+    """Append-only history + CRT canvases for phosphor graphs."""
+    hist = json.loads((ROOT / "docs" / "history.json").read_text())
+    assert isinstance(hist, list) and len(hist) >= 3
+    for row in hist:
+        assert int(row["round"]) > 0
+        assert "unfunded" in row
+        assert "on_schedule" in row
+        assert "escrow_micro" in row
+        assert "fee_pressure_micro" in row
+        assert "source" in row
+    assert (ROOT / "docs" / "history.sqlite").is_file()
+    assert (ROOT / "scripts" / "probe_history.py").is_file()
+    index = (ROOT / "docs" / "index.html").read_text()
+    assert 'id="mix-canvas"' in index
+    assert 'id="split-canvas"' in index
+    assert 'id="escrow-canvas"' in index
+    assert "board.mjs" in index or "app.js" in index
+    app = (ROOT / "docs" / "app.js").read_text()
+    assert "bootHistoryGraphs" in app
+    assert "history.sqlite" in app or "history.json" in app
+    assert "mnemonic" not in app.lower()
+    assert "mainnet" not in app.lower()
+

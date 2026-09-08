@@ -44,6 +44,19 @@ python3 scripts/refresh_due.py
 Writes `docs/due.json` only. TestNet reads + unsigned simulate; never submits.
 
 
+## History graphs
+
+The CRT board also paints phosphor Chart.js graphs (mix / split-over-time / escrow+fee pressure) from append-only `docs/history.json` and `docs/history.sqlite`. The page loads those into in-page sql.js and queries `samples`. Seed rows are honest counts from prior TestNet `due.json` commits. Append another sample with:
+
+```bash
+python3 scripts/probe_history.py          # from current docs/due.json
+python3 scripts/probe_history.py --refresh  # refresh_due.py then append
+```
+
+Escrow µALGO is the sum of overdue box balances in the snapshot; fee pressure is the sum of overdue effective fees. Skips upkeep 81 / never pokes 87. TestNet only.
+
+
+
 ## Measured cost
 
 Zero to view. Reads public algod. Simulate is unsigned and does not submit. No escrow, no opt-in, no wallet prompt.

@@ -311,12 +311,165 @@
     }
   }
 
+
+  const PHOS = "#7cff6b";
+  const PHOS_DIM = "#3a9a32";
+  const AMBER = "#ffbf5e";
+  const WARN = "#ff6b5a";
+  let histDb = null;
+  let charts = {};
+
+  function phosChart(ctx, spec) {
+    const Chart = globalThis.Chart;
+    Chart.defaults.color = PHOS_DIM;
+    Chart.defaults.borderColor = "rgba(124,255,107,0.12)";
+    Chart.defaults.font.family = "IBM Plex Mono, ui-monospace, Menlo, Consolas, monospace";
+    return new Chart(ctx, spec);
+  }
+
+  function querySamples() {
+    if (!histDb) return [];
+    const res = histDb.exec(
+      "SELECT t, round, listed, due, skipped, unfunded, reverting, waiting, other, on_schedule, escrow_micro, fee_pressure_micro, source FROM samples ORDER BY round, t"
+    );
+    if (!res[0]) return [];
+    return res[0].values.map((v) => ({
+      t: v[0], round: v[1], listed: v[2], due: v[3], skipped: v[4],
+      unfunded: v[5], reverting: v[6], waiting: v[7], other: v[8],
+      on_schedule: v[9], escrow_micro: v[10], fee_pressure_micro: v[11], source: v[12],
+    }));
+  }
+
+  function drawHistoryCharts(rows) {
+    if (!rows.length || !globalThis.Chart) return;
+    const latest = rows[rows.length - 1] || {};
+    const labels = rows.map((r) => String(r.round));
+    const mixEl = $("mix-canvas");
+    const splitEl = $("split-canvas");
+    const escEl = $("escrow-canvas");
+    if (!mixEl || !splitEl || !escEl) return;
+
+    if (charts.mix) charts.mix.destroy();
+    charts.mix = phosChart(mixEl, {
+      type: "doughnut",
+      data: {
+        labels: ["on schedule", "waiting", "unfunded", "reverting", "other"],
+        datasets: [{
+          data: [latest.on_schedule || 0, latest.waiting || 0, latest.unfunded || 0, latest.reverting || 0, latest.other || 0],
+          backgroundColor: [PHOS, AMBER, WARN, "#c45cff", PHOS_DIM],
+          borderWidth: 0,
+        }],
+      },
+      options: {
+        plugins: { legend: { position: "bottom", labels: { boxWidth: 10, font: { size: 10 } } } },
+        cutout: "62%",
+        animation: { duration: 900 },
+      },
+    });
+
+    if (charts.split) charts.split.destroy();
+    charts.split = phosChart(splitEl, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          { label: "unfunded", data: rows.map((r) => r.unfunded || 0), borderColor: WARN, tension: 0.25, pointRadius: 2 },
+          { label: "waiting", data: rows.map((r) => r.waiting || 0), borderColor: AMBER, tension: 0.25, pointRadius: 2 },
+          { label: "reverting", data: rows.map((r) => r.reverting || 0), borderColor: "#c45cff", tension: 0.25, pointRadius: 2 },
+          { label: "other", data: rows.map((r) => r.other || 0), borderColor: PHOS_DIM, tension: 0.25, pointRadius: 2 },
+          { label: "on schedule", data: rows.map((r) => r.on_schedule || 0), borderColor: PHOS, tension: 0.25, pointRadius: 2, borderDash: [4, 3] },
+        ],
+      },
+      options: {
+        plugins: { legend: { labels: { boxWidth: 10, font: { size: 10 } } } },
+        scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
+        animation: { duration: 900 },
+      },
+    });
+
+    if (charts.escrow) charts.escrow.destroy();
+    const algo = rows.map((r) => (r.escrow_micro == null ? null : Number(r.escrow_micro) / 1e6));
+    const fee = rows.map((r) => (r.fee_pressure_micro == null ? null : Number(r.fee_pressure_micro) / 1e6));
+    charts.escrow = phosChart(escEl, {
+      type: "line",
+      data: {
+        labels,
+        datasets: [
+          { label: "overdue escrow ALGO", data: algo, borderColor: PHOS, backgroundColor: "rgba(124,255,107,0.14)", fill: true, tension: 0.3, spanGaps: true, pointRadius: 2 },
+          { label: "fee pressure ALGO", data: fee, borderColor: AMBER, tension: 0.3, spanGaps: true, pointRadius: 2 },
+        ],
+      },
+      options: {
+        plugins: { legend: { labels: { boxWidth: 10, font: { size: 10 } } } },
+        scales: { y: { beginAtZero: true } },
+        animation: { duration: 900 },
+      },
+    });
+  }
+
+  async function bootSqlFromRows(rows) {
+    const initSqlJs = globalThis.initSqlJs;
+    const SQL = await initSqlJs({
+      locateFile: (f) => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/" + f,
+    });
+    histDb = new SQL.Database();
+    histDb.run("CREATE TABLE samples (t TEXT, round INTEGER, listed INTEGER, due INTEGER, skipped INTEGER, unfunded INTEGER, reverting INTEGER, waiting INTEGER, other INTEGER, on_schedule INTEGER, escrow_micro INTEGER, fee_pressure_micro INTEGER, source TEXT);");
+    const ins = histDb.prepare("INSERT INTO samples VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    rows.forEach((r) => {
+      ins.run([r.t, r.round, r.listed, r.due, r.skipped || 0, r.unfunded, r.reverting || 0, r.waiting, r.other || 0, r.on_schedule, r.escrow_micro, r.fee_pressure_micro, r.source]);
+    });
+    ins.free();
+  }
+
+  async function bootSqlFromSqlite(buf) {
+    const initSqlJs = globalThis.initSqlJs;
+    const SQL = await initSqlJs({
+      locateFile: (f) => "https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.11.0/" + f,
+    });
+    histDb = new SQL.Database(new Uint8Array(buf));
+  }
+
+  async function bootHistoryGraphs() {
+    const histN = $("hist-n");
+    if (!globalThis.Chart || !globalThis.initSqlJs) {
+      if (histN) histN.textContent = "cdn pending";
+      return;
+    }
+    let rows = [];
+    let loaded = "";
+    try {
+      const res = await fetch("history.sqlite", { cache: "no-store" });
+      if (res.ok) {
+        const buf = await res.arrayBuffer();
+        if (buf.byteLength > 0) {
+          await bootSqlFromSqlite(buf);
+          rows = querySamples();
+          loaded = "sqlite";
+        }
+      }
+    } catch (_) {}
+    if (!rows.length) {
+      try {
+        const hist = await fetch("history.json", { cache: "no-store" }).then((r) => r.json());
+        rows = Array.isArray(hist) ? hist : [];
+        await bootSqlFromRows(rows);
+        rows = querySamples();
+        loaded = "json";
+      } catch (_) {
+        rows = [];
+      }
+    }
+    if (histN) histN.textContent = rows.length ? (rows.length + " · " + loaded) : "empty";
+    drawHistoryCharts(rows);
+  }
+
   $("probe").addEventListener("click", probe);
   (async () => {
     const due = await paintSnapshot();
     if (due && due.lastRound != null) {
       $("status").textContent = `snapshot round ${due.lastRound} · probing live…`;
     }
+    bootHistoryGraphs().catch(() => {});
     await probe();
   })();
 })();
