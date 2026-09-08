@@ -4,8 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ARCRON STATUS · algod · chain 81</title>
-  <meta name="description" content="Algod-only Arcron overdue split: unfunded vs reverting. Unsigned execute simulate. No indexer.">
+  <meta name="description" content="Algod-only Arcron overdue split: unfunded vs reverting. Unsigned execute simulate. Phosphor graphs from append-only sql.js history. No indexer.">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&display=swap">
 </head>
 <body>
   <div class="crt" aria-hidden="true"></div>
@@ -15,17 +17,34 @@
         <h1>ARCRON STATUS</h1>
         <span class="blink">█</span>
       </div>
-      <p class="tag">ALGOD-ONLY · UNSIGNED EXECUTE 5b49cc5c · CHAIN 81 · NO INDEXER · NO WALLET</p>
+      <p class="tag">ALGOD-ONLY · UNSIGNED EXECUTE 5b49cc5c · CHAIN 81 · NO INDEXER · NO WALLET · SQLITE HISTORY</p>
       <dl class="meta" id="meta">
         <div><dt>last-round</dt><dd id="last-round">…</dd></div>
         <div><dt>frozen</dt><dd id="frozen">…</dd></div>
         <div><dt>keeper</dt><dd id="keeper">769891898</dd></div>
         <div><dt>sender</dt><dd id="sender">creator stand-in</dd></div>
         <div><dt>fee</dt><dd>3000 µALGO</dd></div>
+        <div><dt>history</dt><dd id="hist-n">…</dd></div>
       </dl>
       <p class="status" id="status">probing algod…</p>
       <button type="button" id="probe" class="probe">PROBE</button>
     </header>
+
+
+    <section class="graphs" aria-label="overdue history graphs">
+      <article class="panel" id="panel-mix">
+        <h2>MIX</h2>
+        <canvas id="mix-canvas" class="fill" width="320" height="220"></canvas>
+      </article>
+      <article class="panel" id="panel-split">
+        <h2>SPLIT OVER TIME</h2>
+        <canvas id="split-canvas" class="fill" width="480" height="220"></canvas>
+      </article>
+      <article class="panel" id="panel-escrow">
+        <h2>ESCROW / FEE PRESSURE</h2>
+        <canvas id="escrow-canvas" class="fill" width="480" height="220"></canvas>
+      </article>
+    </section>
 
     <main>
       <section class="split" aria-label="overdue split">
@@ -62,6 +81,7 @@
 
     <footer>
       <p>Not arrivals. Arrivals paints DELAYED from boxes without simulate, so a funded reverting target looks late. This board asks algod.</p>
+      <p>Graphs query in-page sql.js over append-only history.json / history.sqlite (seeded from prior TestNet due.json probes). Escrow µALGO is the sum of overdue box balances; fee pressure is the sum of overdue effective fees.</p>
       <p>Apache-2.0 · unaudited · first-party demo · not the Arcron console · TestNet · chain 81</p>
       <p>
         <a href="https://github.com/corvid-agent/arcron-status-page">source</a>
@@ -70,6 +90,6 @@
       </p>
     </footer>
   </div>
-  <script src="app.js"></script>
+  <script type="module" src="board.mjs"></script>
 </body>
 </html>
