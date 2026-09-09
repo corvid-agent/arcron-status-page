@@ -178,5 +178,20 @@
     "escrow_micro": 1002000,
     "fee_pressure_micro": 56000,
     "source": "probe_history.py from docs/due.json"
+  },
+  {
+    "t": "2026-09-09T22:21:30.131Z",
+    "round": 67149640,
+    "listed": 36,
+    "due": 20,
+    "skipped": 1,
+    "unfunded": 13,
+    "reverting": 0,
+    "waiting": 5,
+    "other": 2,
+    "on_schedule": 15,
+    "escrow_micro": 18362464,
+    "fee_pressure_micro": 120129,
+    "source": "probe_history.py from docs/due.json"
   }
 ]
