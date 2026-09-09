@@ -8,13 +8,13 @@ Live: <https://corvid-agent.github.io/arcron-status-page/>
 
 ## Live proof
 
-At TestNet last-round **67111780** (probed 2026-09-08T17:59:02.110Z UTC / 2026-09-08 11:59 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
+At TestNet last-round **67119806** (probed 2026-09-09T00:00:13.108Z UTC / 2026-09-08 18:00 America/Denver), unsigned `execute` simulate (allow-empty-signatures) against app `769891898` split overdue upkeeps as:
 
 - **unfunded** 12 — ids 98–109 (escrow cannot pay effective fee; balance < fee; simulate quote `logic eval error: assert failed pc=1181`)
 - **reverting** 0
-- **waiting** 1 — id 112 (would succeed)
+- **waiting** 0
 - **other** 2 — id 116 (group fee too small), id 118 (account LOYG5I5UHSW6RL7OQ4X6IGS2NTFGO5ZLWEW2LLQKJBI6XVTZSUFMAAC3WY balance 200000 below min 232100)
-- **on schedule** 20 — ids 19, 20, 21, 22, 82, 84, 85, 86, 89, 92, 93, 94, 110, 111, 113, 114, 115, 117, 119, 120
+- **on schedule** 21 — ids 19, 20, 21, 22, 82, 84, 85, 86, 89, 92, 93, 94, 110, 111, 112, 113, 114, 115, 117, 119, 120
 - **skipped** 1 — id 81 (Vigil; CoS does not top up or simulate)
 
 Snapshot also ships as [`docs/due.json`](docs/due.json) so Pages paints immediately, then the live algod probe overwrites. Refresh offline with `python3 scripts/refresh_due.py` (stdlib urllib; same overdue split as `docs/app.js`; skips 81, does not poke 87). Keeper `769891898` is **not frozen** (`frozen=0`). Algod-only, unsigned simulate, no indexer, no wallet.
