@@ -4,9 +4,9 @@
   "keeper": 769891898,
   "pulse": 769891902,
   "rainHub": 770130162,
-  "lastRound": 67526958,
+  "lastRound": 67533053,
   "frozen": 0,
-  "probedAt": "2026-09-21T16:50:06.344Z",
+  "probedAt": "2026-09-21T21:24:30.598Z",
   "feeMicroAlgos": 3000,
   "selector": "5b49cc5c",
   "skipped": [
@@ -17,9 +17,29 @@
   ],
   "unfunded": [
     {
+      "id": 85,
+      "targetApp": 770081916,
+      "roundsLate": 2826,
+      "balance": 1892,
+      "effectiveFee": 10000,
+      "intervalRounds": 1286,
+      "nextExecutionRound": 67530227,
+      "note": "logic eval error: assert failed pc=1181"
+    },
+    {
+      "id": 86,
+      "targetApp": 770081921,
+      "roundsLate": 1534,
+      "balance": 8759,
+      "effectiveFee": 10000,
+      "intervalRounds": 1286,
+      "nextExecutionRound": 67531519,
+      "note": "logic eval error: assert failed pc=1181"
+    },
+    {
       "id": 98,
       "targetApp": 770365966,
-      "roundsLate": 726814,
+      "roundsLate": 732909,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -29,7 +49,7 @@
     {
       "id": 99,
       "targetApp": 770365994,
-      "roundsLate": 726815,
+      "roundsLate": 732910,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -39,7 +59,7 @@
     {
       "id": 100,
       "targetApp": 770366010,
-      "roundsLate": 726806,
+      "roundsLate": 732901,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -49,7 +69,7 @@
     {
       "id": 101,
       "targetApp": 770366030,
-      "roundsLate": 726817,
+      "roundsLate": 732912,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -59,7 +79,7 @@
     {
       "id": 102,
       "targetApp": 770366067,
-      "roundsLate": 726803,
+      "roundsLate": 732898,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -69,7 +89,7 @@
     {
       "id": 103,
       "targetApp": 770366094,
-      "roundsLate": 726796,
+      "roundsLate": 732891,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -79,7 +99,7 @@
     {
       "id": 104,
       "targetApp": 770366116,
-      "roundsLate": 726786,
+      "roundsLate": 732881,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -89,7 +109,7 @@
     {
       "id": 105,
       "targetApp": 770366146,
-      "roundsLate": 726777,
+      "roundsLate": 732872,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -99,7 +119,7 @@
     {
       "id": 106,
       "targetApp": 770366187,
-      "roundsLate": 726765,
+      "roundsLate": 732860,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -109,7 +129,7 @@
     {
       "id": 107,
       "targetApp": 770366223,
-      "roundsLate": 726453,
+      "roundsLate": 732548,
       "balance": 2000,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -119,7 +139,7 @@
     {
       "id": 108,
       "targetApp": 770366335,
-      "roundsLate": 726744,
+      "roundsLate": 732839,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -129,7 +149,7 @@
     {
       "id": 109,
       "targetApp": 770366067,
-      "roundsLate": 726640,
+      "roundsLate": 732735,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -139,7 +159,7 @@
     {
       "id": 120,
       "targetApp": 770885800,
-      "roundsLate": 396766,
+      "roundsLate": 402861,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 1700,
@@ -153,7 +173,7 @@
     {
       "id": 116,
       "targetApp": 770769163,
-      "roundsLate": 583278,
+      "roundsLate": 589373,
       "balance": 496000,
       "effectiveFee": 4000,
       "intervalRounds": 30857,
@@ -164,7 +184,7 @@
     {
       "id": 118,
       "targetApp": 770881395,
-      "roundsLate": 612591,
+      "roundsLate": 618686,
       "balance": 504000,
       "effectiveFee": 4000,
       "intervalRounds": 1700,
@@ -180,8 +200,6 @@
     22,
     82,
     84,
-    85,
-    86,
     89,
     92,
     93,
