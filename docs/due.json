@@ -4,9 +4,9 @@
   "keeper": 769891898,
   "pulse": 769891902,
   "rainHub": 770130162,
-  "lastRound": 67657600,
+  "lastRound": 67663780,
   "frozen": 0,
-  "probedAt": "2026-09-25T18:40:35.583Z",
+  "probedAt": "2026-09-25T23:17:30.323Z",
   "feeMicroAlgos": 3000,
   "selector": "5b49cc5c",
   "skipped": [
@@ -19,7 +19,7 @@
     {
       "id": 85,
       "targetApp": 770081916,
-      "roundsLate": 127373,
+      "roundsLate": 133553,
       "balance": 1892,
       "effectiveFee": 10000,
       "intervalRounds": 1286,
@@ -29,7 +29,7 @@
     {
       "id": 86,
       "targetApp": 770081921,
-      "roundsLate": 126081,
+      "roundsLate": 132261,
       "balance": 8759,
       "effectiveFee": 10000,
       "intervalRounds": 1286,
@@ -39,7 +39,7 @@
     {
       "id": 98,
       "targetApp": 770365966,
-      "roundsLate": 857456,
+      "roundsLate": 863636,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -49,7 +49,7 @@
     {
       "id": 99,
       "targetApp": 770365994,
-      "roundsLate": 857457,
+      "roundsLate": 863637,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -59,7 +59,7 @@
     {
       "id": 100,
       "targetApp": 770366010,
-      "roundsLate": 857448,
+      "roundsLate": 863628,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -69,7 +69,7 @@
     {
       "id": 101,
       "targetApp": 770366030,
-      "roundsLate": 857459,
+      "roundsLate": 863639,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -79,7 +79,7 @@
     {
       "id": 102,
       "targetApp": 770366067,
-      "roundsLate": 857445,
+      "roundsLate": 863625,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -89,7 +89,7 @@
     {
       "id": 103,
       "targetApp": 770366094,
-      "roundsLate": 857438,
+      "roundsLate": 863618,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -99,7 +99,7 @@
     {
       "id": 104,
       "targetApp": 770366116,
-      "roundsLate": 857428,
+      "roundsLate": 863608,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -109,7 +109,7 @@
     {
       "id": 105,
       "targetApp": 770366146,
-      "roundsLate": 857419,
+      "roundsLate": 863599,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -119,7 +119,7 @@
     {
       "id": 106,
       "targetApp": 770366187,
-      "roundsLate": 857407,
+      "roundsLate": 863587,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -129,7 +129,7 @@
     {
       "id": 107,
       "targetApp": 770366223,
-      "roundsLate": 857095,
+      "roundsLate": 863275,
       "balance": 2000,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -139,7 +139,7 @@
     {
       "id": 108,
       "targetApp": 770366335,
-      "roundsLate": 857386,
+      "roundsLate": 863566,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -149,7 +149,7 @@
     {
       "id": 109,
       "targetApp": 770366067,
-      "roundsLate": 857282,
+      "roundsLate": 863462,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 20,
@@ -159,7 +159,7 @@
     {
       "id": 120,
       "targetApp": 770885800,
-      "roundsLate": 527408,
+      "roundsLate": 533588,
       "balance": 0,
       "effectiveFee": 4000,
       "intervalRounds": 1700,
@@ -173,7 +173,7 @@
     {
       "id": 116,
       "targetApp": 770769163,
-      "roundsLate": 713920,
+      "roundsLate": 720100,
       "balance": 496000,
       "effectiveFee": 4000,
       "intervalRounds": 30857,
@@ -184,7 +184,7 @@
     {
       "id": 118,
       "targetApp": 770881395,
-      "roundsLate": 743233,
+      "roundsLate": 749413,
       "balance": 504000,
       "effectiveFee": 4000,
       "intervalRounds": 1700,
